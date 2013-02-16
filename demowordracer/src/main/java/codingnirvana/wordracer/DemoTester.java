@@ -72,16 +72,10 @@ public class DemoTester {
         int[] score = new int[]{0, 0, 1, 2, 3, 5, 8, 13};
 
         List<String> words = new ArrayList<String>();
-        try {
-            Scanner scanner = new Scanner(new File("/tmp/words.dat"));
-            while (scanner.hasNext()) {
-                words.add(scanner.nextLine());
-            }
-
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException("Please add the words.dat to the tmp directory .. ");
+        Scanner scanner = new Scanner(DemoTester.class.getResourceAsStream("/words.dat"));
+        while (scanner.hasNext()) {
+            words.add(scanner.nextLine());
         }
-
 
         int[][] total = new int[2][7];
         boolean[][] isTakenH = new boolean[7][7];

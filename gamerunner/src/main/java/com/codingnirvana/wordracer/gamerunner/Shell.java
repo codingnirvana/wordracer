@@ -1,23 +1,22 @@
 package com.codingnirvana.wordracer.gamerunner;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Shell {
 
-    private final String command;
+    private Player player;
     private final boolean isFirstPlayer;
     private Process process;
     private PrintWriter writer;
     private BufferedReader reader;
+    private String runDirectory;
 
-    public Shell(String command, boolean isFirstPlayer) {
-        this.command = command;
+    public Shell(String runDirectory, Player player, boolean isFirstPlayer) {
+        this.runDirectory = runDirectory;
+        this.player = player;
         this.isFirstPlayer = isFirstPlayer;
     }
 
@@ -52,8 +51,14 @@ public class Shell {
 
     private void initializeProcess() throws IOException {
         List<String> res = Collections.synchronizedList(new ArrayList<String>());
-        process = Runtime.getRuntime().exec(command);
+        ProcessBuilder pb = new ProcessBuilder(splitArgs(player.getCommand()));
+        pb.directory(new File(String.format("%s/%s/",runDirectory, player.getDirectory())));
+        process = pb.start();
         writer = new PrintWriter(process.getOutputStream());
         reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+    }
+
+    private String[] splitArgs(String command) {
+        return command.split(" ");
     }
 }

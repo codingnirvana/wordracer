@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class Runner {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
 
         if (args.length != 2) {
             System.out.println("Please specify the path to the players.yml configuration and the run directory");
@@ -30,14 +30,13 @@ public class Runner {
         char[][] firstBoard = new char[7][7];
         char[][] secondBoard = new char[7][7];
 
-        Shell playerOne = new Shell(firstPlayer.getCommand(), true);
-        Shell playerTwo = new Shell(secondPlayer.getCommand(), false);
+        Shell playerOne = new Shell(runDirectory, firstPlayer, true);
+        Shell playerTwo = new Shell(runDirectory, secondPlayer, false);
 
         playerOne.initGameBoard(letter);
         playerTwo.initGameBoard(letter);
         firstBoard[3][3] = letter;
         secondBoard[3][3] = letter;
-
 
         for (int i = 0; i < 24; i++) {
             Result result = playerOne.pickLetter();
@@ -56,6 +55,9 @@ public class Runner {
             pos1 = playerOne.pickPosition(letter2);
             firstBoard[pos1 / 7][pos1 % 7] = letter2;
         }
+
+        playerOne.endGame();
+        playerTwo.endGame();
 
 
         System.out.println(String.format("Player 1 (%s)", firstPlayer.getName()));

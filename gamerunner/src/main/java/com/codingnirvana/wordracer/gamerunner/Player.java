@@ -7,11 +7,13 @@ public class Player {
     private String name;
     private String language;
     private String command;
+    private String directory;
 
     public Player(HashMap playerMap) {
         this.name = (String) playerMap.get("name");
         this.language = (String) playerMap.get("language");
         this.command = (String) playerMap.get("command");
+        this.directory = (String) playerMap.get("directory");
     }
 
     public String getCommand() {
@@ -20,5 +22,9 @@ public class Player {
 
     public String getName() {
         return this.name;
+    }
+
+    public String getDirectory() {
+        return directory;
     }
 }
