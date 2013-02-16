@@ -5,7 +5,7 @@ Word Racer Demo + Tester Program
 
 ### Introduction ###
 There are two modules in the project
-- GameRunner - You can use this to test your bot against a demo wordracer bot.
+- GameRunner - You can use this to test your bot against the demo wordracer bot.
 - DemoWordRacer - This module contains the source code for the demo wordracer, which plays randomly
 
 
@@ -15,10 +15,10 @@ There are two modules in the project
 - Take a look at the demo wordracer to see how it takes inputs and writes output
 - Modify the players.yml file (in the conf directory of gamerunner module) to include the details of your bot
 - There are two important settings in the yml file (other than name and language) - directory and command
-- The directory is your workingdirectory where your bot will be placed. This parent is the "run" directory which contains all the bots
+- The directory is your working directory where your bot will be placed. All your scripts and files should be in this directory.The parent directory is the "run" directory which contains all the bots
 - The command is either a single command (with args) or shell script to start your bot.
 - Also ensure that the words.dat is in your directory
-- Run the gamerunner with your bot and the demo bot. 
+- Run the gamerunner with your bot and the demo bot by running the following commands. 
 
 ```
   # package the gamerunner jar
