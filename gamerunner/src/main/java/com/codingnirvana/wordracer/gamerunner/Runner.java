@@ -1,18 +1,37 @@
 package com.codingnirvana.wordracer.gamerunner;
 
+import org.yaml.snakeyaml.Yaml;
+
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
 public class Runner {
     public static void main(String[] args) throws IOException {
+
+        if (args.length != 2) {
+            System.out.println("Please specify the path to the players.yml configuration and the run directory");
+            return;
+        }
+
+        String configPath = args[0];
+        String runDirectory = args[1];
+
+        Yaml yaml = new Yaml();
+        HashMap playerMap = (HashMap) yaml.load(new FileReader(configPath));
+
+        List<HashMap> allPlayers = (List<HashMap>)playerMap.get("players");
+
+        Player firstPlayer = new Player(allPlayers.get(0));
+        Player secondPlayer = new Player(allPlayers.get(1));
+
         char letter = (char) ('A' + new Random().nextInt(25));
 
         char[][] firstBoard = new char[7][7];
         char[][] secondBoard = new char[7][7];
-        String command = "java -jar /home/rajeshm/indix/wordracer/demowordracer/target/demowordracer-1.0-SNAPSHOT.jar";
 
-        Shell playerOne = new Shell(command, true);
-        Shell playerTwo = new Shell(command, false);
+        Shell playerOne = new Shell(firstPlayer.getCommand(), true);
+        Shell playerTwo = new Shell(secondPlayer.getCommand(), false);
 
         playerOne.initGameBoard(letter);
         playerTwo.initGameBoard(letter);
@@ -39,10 +58,10 @@ public class Runner {
         }
 
 
-        System.out.println("Opponents board");
+        System.out.println(String.format("Player 1 (%s)", firstPlayer.getName()));
         printBoardWithTotal(firstBoard, calculateScore(firstBoard));
 
-        System.out.println("Your Board");
+        System.out.println(String.format("Player 2 (%s)", secondPlayer.getName()));
         printBoardWithTotal(secondBoard, calculateScore(secondBoard));
     }
 
