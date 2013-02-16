@@ -11,10 +11,9 @@ There are two modules in the project
 
 ### How to run your bot ###
 
-- Ensure that you are follow the input/output instructions exactly as specified in the problem statement
-- Take a look at the demo wordracer to see how it takes inputs and writes output
+- Ensure that you follow the input/output instructions exactly as specified in the problem statement. Take a look at the demo wordracer to see how it does input/output
 - Modify the players.yml file (in the conf directory of gamerunner module) to include the details of your bot
-- There are two important settings in the yml file (other than name and language) - directory and command
+- For each bot(i.e. player), there are two important settings in the yml file (other than name and language) - directory and command
 - The directory is your working directory where your bot will be placed. All your scripts and files should be in this directory.The parent directory is the "run" directory which contains all the bots
 - The command is either a single command (with args) or shell script to start your bot.
 - Also ensure that the words.dat is in your directory
