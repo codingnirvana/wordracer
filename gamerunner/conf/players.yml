@@ -1,11 +1,8 @@
-# Only supports two players currently.
 players:
-
   - name: DemoWordRacer1
     language: Java
     directory: demo
     command: java -jar demowordracer-1.0-SNAPSHOT.jar
-
   - name: DemoWordRacer2
     language: Java
     directory: demo

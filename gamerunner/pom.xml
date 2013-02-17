@@ -41,6 +41,12 @@
             <artifactId>snakeyaml</artifactId>
             <version>1.11</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.14</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -95,7 +101,7 @@
                                     <transformers>
                                         <transformer
                                                 implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                            <mainClass>com.codingnirvana.wordracer.gamerunner.Runner</mainClass>
+                                            <mainClass>com.codingnirvana.wordracer.Runner</mainClass>
                                         </transformer>
                                     </transformers>
                                 </configuration>

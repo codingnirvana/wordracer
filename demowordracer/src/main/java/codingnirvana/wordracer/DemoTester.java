@@ -1,18 +1,20 @@
 package codingnirvana.wordracer;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import codingnirvana.wordracer.samples.GlassRoom;
+import codingnirvana.wordracer.samples.MyWordRacer;
+
+import java.io.IOException;
 import java.util.*;
 
 public class DemoTester {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         char letter = (char) ('A' + new Random().nextInt(25));
 
         char[][] firstBoard = new char[7][7];
         char[][] secondBoard = new char[7][7];
 
-        DemoWordRacer wRacer = new DemoWordRacer();
-        DemoWordRacer dRacer = new DemoWordRacer();
+        WordRacer wRacer = new MyWordRacer();
+        WordRacer dRacer = new GlassRoom();
 
         wRacer.initGameBoard(letter);
         dRacer.initGameBoard(letter);

@@ -10,7 +10,7 @@ public class RunnerTest {
     @Test
     public void shouldCalculateCorrectScoreForBoard1() {
 
-        int[][] score = Runner.calculateScore(new char[][]{new char[]{'A', 'B', 'A', 'L', 'O', 'N', 'E'},
+        int[][] score = Game.calculateScore(new char[][]{new char[]{'A', 'B', 'A', 'L', 'O', 'N', 'E'},
                 new char[]{'X', 'I', 'B', 'I', 'U', 'L', 'A'},
                 new char[]{'I', 'Q', 'I', 'P', 'T', 'I', 'C'},
                 new char[]{'S', 'N', 'O', 'B', 'W', 'A', 'Y'},
@@ -27,7 +27,7 @@ public class RunnerTest {
 
     @Test
     public void shouldCalculateCorrectScoreForBoard2() {
-        int[][] score = Runner.calculateScore(new char[][]{new char[]{'E', 'P', 'M', 'J', 'J', 'Q', 'J'},
+        int[][] score = Game.calculateScore(new char[][]{new char[]{'E', 'P', 'M', 'J', 'J', 'Q', 'J'},
                 new char[]{'E', 'A', 'E', 'U', 'U', 'U', 'U'},
                 new char[]{'Y', 'B', 'J', 'M', 'M', 'A', 'D'},
                 new char[]{'Q', 'U', 'I', 'P', 'P', 'E', 'D'},
@@ -45,7 +45,7 @@ public class RunnerTest {
 
     @Test
     public void shouldCalculateCorrectScoreForBoard3() {
-        int[][] score = Runner.calculateScore(new char[][]{new char[]{'R', 'D', 'O', 'U', 'S', 'E', 'S'},
+        int[][] score = Game.calculateScore(new char[][]{new char[]{'R', 'D', 'O', 'U', 'S', 'E', 'S'},
                 new char[]{'E', 'R', 'A', 'J', 'I', 'F', 'U'},
                 new char[]{'S', 'U', 'B', 'Q', 'F', 'O', 'F'},
                 new char[]{'E', 'M', 'O', 'P', 'E', 'D', 'Q'},
@@ -63,7 +63,7 @@ public class RunnerTest {
     @Test
     public void shouldCalculateCorrectScoreForBoard4() {
 
-        int[][] score = Runner.calculateScore(new char[][]{new char[]{'F', 'U', 'T', 'T', 'O', 'C', 'K'},
+        int[][] score = Game.calculateScore(new char[][]{new char[]{'F', 'U', 'T', 'T', 'O', 'C', 'K'},
                 new char[]{'U', 'N', 'E', 'Q', 'U', 'A', 'L'},
                 new char[]{'T', 'R', 'A', 'M', 'M', 'E', 'L'},
                 new char[]{'H', 'O', 'L', 'Y', 'D', 'A', 'Y'},
@@ -80,7 +80,7 @@ public class RunnerTest {
     @Test
     public void shouldCalculateCorrectScoreForBoard5() {
 
-        int[][] score = Runner.calculateScore(new char[][]{new char[]{'F', 'U', 'Z', 'Z', 'I', 'L', 'Y'},
+        int[][] score = Game.calculateScore(new char[][]{new char[]{'F', 'U', 'Z', 'Z', 'I', 'L', 'Y'},
                 new char[]{'U', 'N', 'B', 'O', 'W', 'E', 'D'},
                 new char[]{'T', 'R', 'A', 'P', 'P', 'E', 'R'},
                 new char[]{'H', 'A', 'U', 'N', 'T', 'E', 'R'},
