@@ -32,6 +32,8 @@ public class Tournament {
                     Game game = new Game(firstPlayer, secondPlayer, gameNumber);
                     game.play();
 
+                    ConsoleVisualizer.printGameBoard(game);
+
                     this.games.add(game);
                     gameNumber ++;
                 }

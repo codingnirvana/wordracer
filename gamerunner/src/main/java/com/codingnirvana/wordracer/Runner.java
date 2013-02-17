@@ -36,10 +36,6 @@ public class Runner {
 
         tournament.play();
 
-        for (Game game : tournament.getGames()) {
-            ConsoleVisualizer.printGameBoard(game);
-        }
-
         ConsoleVisualizer.printRankings(tournament.getRankings());
 
         new HtmlVisualizer().printRankings(tournament, runDirectory);

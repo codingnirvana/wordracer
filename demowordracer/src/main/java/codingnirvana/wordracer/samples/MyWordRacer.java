@@ -76,18 +76,15 @@ public class MyWordRacer implements WordRacer {
         return pattern;
     }
 
-    int fixWordSingle(int i, int j, int dx, int dy, char[][] fixedGameBoard, int length)
-    {
+    int fixWordSingle(int i, int j, int dx, int dy, char[][] fixedGameBoard, int length) {
         String pattern = createPattern(i, j, dx, dy, fixedGameBoard, length);
         int matches = 0;
-        for (String word : words)
-        {
+        for (String word : words) {
             Boolean found = true;
             if (word.length() != length)
                 continue;
             for (int n = 0; n < word.length(); n++)
-                if (pattern.charAt(n) != '*' && word.charAt(n) != pattern.charAt(n))
-                {
+                if (pattern.charAt(n) != '*' && word.charAt(n) != pattern.charAt(n)) {
                     found = false;
                     break;
                 }
@@ -96,11 +93,9 @@ public class MyWordRacer implements WordRacer {
         }
         // Add number of  7 - * into 10 to matches
         int cnt = 0;
-        if (matches > 0)
-        {
+        if (matches > 0) {
             for (int n = 0; n < pattern.length(); n++)
-                if (pattern.charAt(n) != '*')
-                {
+                if (pattern.charAt(n) != '*') {
                     cnt++;
                     matches += 10 * (7 - i);
                 }
@@ -110,25 +105,21 @@ public class MyWordRacer implements WordRacer {
         return matches;
     }
 
-    private int pickBestPosition(char letter)
-    {
+    private int pickBestPosition(char letter) {
         int maxRow = -1;
         int maxStars = 0;
 
         // Try picking from the row which has the maximum '*'
-        for (int i = 0; i < 7; i++)
-        {
+        for (int i = 0; i < 7; i++) {
             int c = 0;
             for (int j = 2; j < 7; j++)
                 if (board[i][j] == '*')
-            c++;
-            if (c > 0 && corruptRows.contains(i))
-            {
+                    c++;
+            if (c > 0 && corruptRows.contains(i)) {
                 maxRow = i;
                 break;
             }
-            if (c >= maxStars)
-            {
+            if (c >= maxStars) {
                 maxStars = c;
                 maxRow = i;
             }
@@ -139,11 +130,10 @@ public class MyWordRacer implements WordRacer {
 
         for (int i = 6; i >= 0; i--)
             if (board[maxRow][i] == '*')
-        return maxRow * 7 + i;
+                return maxRow * 7 + i;
 
         return -1;
     }
-
 
 
     private void readWordsList() {
@@ -160,49 +150,44 @@ public class MyWordRacer implements WordRacer {
         int pos = -1;
         // Try to pick from the fixed game board
         for (int i = 0; i < 49; i++)
-            if (board[i / 7][ i % 7] == '*' && gameBoardFixed[i / 7][ i % 7] != '*')
-        {
-            letter = gameBoardFixed[i / 7][ i % 7];
-            board[i / 7][ i % 7] = letter;
-            pos = i;
-            break;
-        }
+            if (board[i / 7][i % 7] == '*' && gameBoardFixed[i / 7][i % 7] != '*') {
+                letter = gameBoardFixed[i / 7][i % 7];
+                board[i / 7][i % 7] = letter;
+                pos = i;
+                break;
+            }
 
         if (letter != '%')
-            return new Result(pos,letter);
+            return new Result(pos, letter);
 
         int bestMatches = 0;
 
-        for (int a = 0; a < 26; a++)
-        {
-            char c = (char)('A' + a);
+        for (int a = 0; a < 26; a++) {
+            char c = (char) ('A' + a);
             int n = 7;
             for (int i = 48; i >= 0; i--)
-                if (board[i / 7][ i % 7] == '*' && gameBoardFixed[i / 7][ i % 7] == '*')
-            {
-                gameBoardFixed[i / 7][ i % 7] = c;
-                int matches = fixWordSingle(i / 7, 0, 0, 1, gameBoardFixed, n);
-                if (bestMatches < matches)
-                {
-                    bestMatches = matches;
-                    pos = i;
-                    letter = c;
+                if (board[i / 7][i % 7] == '*' && gameBoardFixed[i / 7][i % 7] == '*') {
+                    gameBoardFixed[i / 7][i % 7] = c;
+                    int matches = fixWordSingle(i / 7, 0, 0, 1, gameBoardFixed, n);
+                    if (bestMatches < matches) {
+                        bestMatches = matches;
+                        pos = i;
+                        letter = c;
+                    }
+                    gameBoardFixed[i / 7][i % 7] = '*';
                 }
-                gameBoardFixed[i / 7][i % 7] = '*';
-            }
         }
 
         if (pos == -1)
             pos = pickBestPosition(letter);
 
-        if (letter == '%')
-        {
+        if (letter == '%') {
             // TODO: Try for smaller letters
             letter = 'J';
         }
 
-        board[pos / 7][ pos % 7] = gameBoardFixed[pos / 7][ pos % 7] = letter;
-        return new Result(pos,letter);
+        board[pos / 7][pos % 7] = gameBoardFixed[pos / 7][pos % 7] = letter;
+        return new Result(pos, letter);
     }
 
     @Override
@@ -210,31 +195,28 @@ public class MyWordRacer implements WordRacer {
         int pos = -1;
         // Try to pick from the fixed game board
         for (int i = 0; i < 49; i++)
-            if (board[i / 7][ i % 7] == '*' && gameBoardFixed[i / 7][ i % 7] == letter)
-        {
-            board[i / 7][ i % 7] = letter;
-            return i;
-        }
+            if (board[i / 7][i % 7] == '*' && gameBoardFixed[i / 7][i % 7] == letter) {
+                board[i / 7][i % 7] = letter;
+                return i;
+            }
 
         int n = 7;
         int bestMatches = 0;
         for (int i = 48; i >= 0; i--)
-            if (board[i / 7][ i % 7] == '*' && gameBoardFixed[i / 7][ i % 7] == '*')
-        {
-            gameBoardFixed[i / 7][ i % 7] = letter;
-            int matches = fixWordSingle(i / 7, 0, 0, 1, gameBoardFixed, n);
-            if (bestMatches < matches)
-            {
-                bestMatches = matches;
-                pos = i;
+            if (board[i / 7][i % 7] == '*' && gameBoardFixed[i / 7][i % 7] == '*') {
+                gameBoardFixed[i / 7][i % 7] = letter;
+                int matches = fixWordSingle(i / 7, 0, 0, 1, gameBoardFixed, n);
+                if (bestMatches < matches) {
+                    bestMatches = matches;
+                    pos = i;
+                }
+                gameBoardFixed[i / 7][i % 7] = '*';
             }
-            gameBoardFixed[i / 7][ i % 7] = '*';
-        }
 
         if (pos == -1)
             pos = pickBestPosition(letter);
 
-        board[pos / 7][ pos % 7] = gameBoardFixed[pos / 7][ pos % 7] = letter;
+        board[pos / 7][pos % 7] = gameBoardFixed[pos / 7][pos % 7] = letter;
         return pos;
     }
 }

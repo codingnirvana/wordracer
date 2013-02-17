@@ -3,7 +3,15 @@ players:
     language: Java
     directory: demo
     command: java -jar demowordracer-1.0-SNAPSHOT.jar
-  - name: DemoWordRacer2
+  - name: MyWordRacer
     language: Java
     directory: demo
-    command: java -jar demowordracer-1.0-SNAPSHOT.jar
+    command: java -jar demowordracer-1.0-SNAPSHOT.jar M
+  - name: ZRacer
+    language: Java
+    directory: demo
+    command: java -jar demowordracer-1.0-SNAPSHOT.jar Z
+  - name: GlassRoom
+    language: Java
+    directory: demo
+    command: java -jar demowordracer-1.0-SNAPSHOT.jar G

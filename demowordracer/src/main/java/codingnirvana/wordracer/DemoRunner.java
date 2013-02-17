@@ -1,12 +1,28 @@
 package codingnirvana.wordracer;
 
+import codingnirvana.wordracer.samples.GlassRoom;
+import codingnirvana.wordracer.samples.MyWordRacer;
+import codingnirvana.wordracer.samples.ZRacer;
+
+import java.io.IOException;
 import java.util.Scanner;
 
 public class DemoRunner {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         char[][] firstBoard = new char[7][7];
 
-        DemoWordRacer dRacer = new DemoWordRacer();
+        WordRacer dRacer = new DemoWordRacer();
+
+        if (args.length == 1) {
+            if (args[0].equals("M")) {
+                dRacer = new MyWordRacer();
+            } else if (args[0].equals("Z")) {
+                dRacer = new ZRacer();
+            } else {
+                dRacer = new GlassRoom();
+            }
+        }
+
         Scanner input = new Scanner(System.in);
         char firstLetter = input.nextLine().charAt(0);
 
