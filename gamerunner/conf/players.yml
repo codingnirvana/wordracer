@@ -1,17 +1,9 @@
 players:
-  - name: DemoWordRacer1
-    language: Java
-    directory: demo
-    command: java -jar demowordracer-1.0-SNAPSHOT.jar
-  - name: MyWordRacer
-    language: Java
-    directory: demo
-    command: java -jar demowordracer-1.0-SNAPSHOT.jar M
+  - name: Kbot
+    language: Python
+    directory: kbot
+    command: python word_racer.py
   - name: ZRacer
     language: Java
     directory: demo
     command: java -jar demowordracer-1.0-SNAPSHOT.jar Z
-  - name: GlassRoom
-    language: Java
-    directory: demo
-    command: java -jar demowordracer-1.0-SNAPSHOT.jar G
