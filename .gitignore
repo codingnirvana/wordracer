@@ -6,3 +6,4 @@ demowordracer/*.iml
 gamerunner/*.iml
 gamerunner/*.ipr
 gamerunner/*.iws
+gamerunner/run/**/words.dat
