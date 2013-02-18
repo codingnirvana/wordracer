@@ -1,8 +1,8 @@
 players:
-  - name: Kbot
-    language: Python
-    directory: kbot
-    command: python word_racer.py
+  - name: VBot
+    language: C++
+    directory: vbot
+    command: ./wordracer
   - name: ZRacer
     language: Java
     directory: demo
