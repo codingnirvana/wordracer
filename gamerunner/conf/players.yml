@@ -7,3 +7,7 @@ players:
     language: Java
     directory: demo
     command: java -jar demowordracer-1.0-SNAPSHOT.jar Z
+  - name: AshBot
+    language: Java
+    directory: ashbot
+    command: java -jar wordracer-1.0-SNAPSHOT.jar
