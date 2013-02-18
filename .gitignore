@@ -2,3 +2,7 @@
 demowordracer/target
 gamerunner/target
 gamerunner/run/results/
+demowordracer/*.iml
+gamerunner/*.iml
+gamerunner/*.ipr
+gamerunner/*.iws
