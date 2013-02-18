@@ -7,3 +7,4 @@ gamerunner/*.iml
 gamerunner/*.ipr
 gamerunner/*.iws
 gamerunner/run/**/words.dat
+gamerunner/conf/players.yml
