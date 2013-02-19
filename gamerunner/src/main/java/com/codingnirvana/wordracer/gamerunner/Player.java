@@ -3,7 +3,10 @@ package com.codingnirvana.wordracer.gamerunner;
 import org.apache.commons.io.IOUtils;
 
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 public class Player {
 

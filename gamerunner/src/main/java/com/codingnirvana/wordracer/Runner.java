@@ -6,8 +6,9 @@ import com.codingnirvana.wordracer.visualizer.ConsoleVisualizer;
 import com.codingnirvana.wordracer.visualizer.HtmlVisualizer;
 import org.yaml.snakeyaml.Yaml;
 
-import java.io.*;
-import java.util.*;
+import java.io.FileReader;
+import java.util.HashMap;
+import java.util.List;
 
 public class Runner {
     public static void main(String[] args) throws Exception {
