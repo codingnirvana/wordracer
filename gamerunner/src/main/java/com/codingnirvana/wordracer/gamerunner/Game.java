@@ -26,32 +26,46 @@ public class Game {
         this.secondPlayerBoard = new char[7][7];
     }
 
-    public void play() throws IOException, InterruptedException {
+    public void play() throws IOException {
         char startingLetter = (char) ('A' + new Random().nextInt(25));
 
         firstPlayerBoard[3][3] = secondPlayerBoard[3][3] = startingLetter;
-        firstPlayer.initGameBoard(startingLetter, true);
-        secondPlayer.initGameBoard(startingLetter, false);
 
-        for (int turn = 0; turn < 24; turn++) {
-            Result result = firstPlayer.pickLetter();
-            firstPlayerBoard[result.position / 7][result.position % 7] = result.letter;
+        try {
 
-            int position = secondPlayer.pickPosition(result.letter);
-            secondPlayerBoard[position / 7][position % 7] = result.letter;
+            firstPlayer.initGameBoard(startingLetter, true);
+            secondPlayer.initGameBoard(startingLetter, false);
 
-            result = secondPlayer.pickLetter();
-            secondPlayerBoard[result.position / 7][result.position % 7] = result.letter;
+            for (int turn = 0; turn < 24; turn++) {
+                Result result = firstPlayer.pickLetter();
+                firstPlayerBoard[result.position / 7][result.position % 7] = result.letter;
 
-            position = firstPlayer.pickPosition(result.letter);
-            firstPlayerBoard[position / 7][position % 7] = result.letter;
+                int position = secondPlayer.pickPosition(result.letter);
+                secondPlayerBoard[position / 7][position % 7] = result.letter;
+
+                result = secondPlayer.pickLetter();
+                secondPlayerBoard[result.position / 7][result.position % 7] = result.letter;
+
+                position = firstPlayer.pickPosition(result.letter);
+                firstPlayerBoard[position / 7][position % 7] = result.letter;
+            }
+        } catch (Player.InvalidGameException e) {
+            this.status = GameStatus.INVALID;
+            this.statusMessage = e.getMessage();
+            this.result = e.getPlayerDefaulted().equals(firstPlayer) ? GameResult.SECOND_PLAYER_WINNER : GameResult.FIRST_PLAYER_WINNER;
         }
+
 
         firstPlayer.endGame();
         secondPlayer.endGame();
     }
 
     public void calculateResult() {
+
+        if (this.status != GameStatus.VALID) {
+            return;
+        }
+
         int firstPlayerScore = totalScore(firstPlayerBoard);
         int secondPlayerScore = totalScore(secondPlayerBoard);
 
@@ -82,14 +96,17 @@ public class Game {
     }
 
     public String getGameResultAsString() {
-        return String.format("%s-%s", totalScore(firstPlayerBoard), totalScore(secondPlayerBoard));
-    }
+        if (this.status == GameStatus.INVALID) {
+            return this.statusMessage;
+        }
 
-    private void setInvalidMessage(String message) {
-        this.status = GameStatus.INVALID;
-        this.statusMessage =  message;
+        return String.format("%s(%s)-%s(%s)",
+                totalScore(firstPlayerBoard),
+                firstPlayer.getTimeTakenInMs(),
+                totalScore(secondPlayerBoard),
+                secondPlayer.getTimeTakenInMs()
+        );
     }
-
 
     public int totalScore(char[][] firstPlayerBoard) {
         int[][] score = calculateScore(firstPlayerBoard);
@@ -179,6 +196,10 @@ public class Game {
 
     public char[][] getSecondPlayerBoard() {
         return secondPlayerBoard;
+    }
+
+    public GameStatus getStatus() {
+        return status;
     }
 
     public static enum GameResult {

@@ -2,7 +2,6 @@ package codingnirvana.wordracer;
 
 import codingnirvana.wordracer.samples.DemoWordRacer;
 import codingnirvana.wordracer.samples.MyWordRacer;
-import codingnirvana.wordracer.samples.RogueWordRacer;
 
 import java.io.IOException;
 import java.util.*;

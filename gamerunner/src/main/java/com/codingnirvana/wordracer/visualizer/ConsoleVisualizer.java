@@ -8,6 +8,9 @@ import java.util.List;
 public class ConsoleVisualizer {
 
     public static void printGameBoard(Game game) {
+        System.out.println(String.format("Game Status - %s", game.getStatus() == Game.GameStatus.VALID ? "VALID" : "INVALID" ));
+        System.out.println(game.getGameResultAsString());
+
         System.out.println(String.format("Player 1 (%s)", game.getFirstPlayer().getName()));
         printBoardWithTotal(game, game.getFirstPlayerBoard());
 
