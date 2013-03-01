@@ -1,7 +1,8 @@
 package codingnirvana.wordracer;
 
-import codingnirvana.wordracer.samples.GlassRoom;
+import codingnirvana.wordracer.samples.DemoWordRacer;
 import codingnirvana.wordracer.samples.MyWordRacer;
+import codingnirvana.wordracer.samples.RogueWordRacer;
 
 import java.io.IOException;
 import java.util.*;
@@ -14,7 +15,7 @@ public class DemoTester {
         char[][] secondBoard = new char[7][7];
 
         WordRacer wRacer = new MyWordRacer();
-        WordRacer dRacer = new GlassRoom();
+        WordRacer dRacer = new DemoWordRacer();
 
         wRacer.initGameBoard(letter);
         dRacer.initGameBoard(letter);

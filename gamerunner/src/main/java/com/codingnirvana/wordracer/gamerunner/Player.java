@@ -3,10 +3,7 @@ package com.codingnirvana.wordracer.gamerunner;
 import org.apache.commons.io.IOUtils;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 
 public class Player {
 
@@ -14,13 +11,11 @@ public class Player {
     private String language;
     private String command;
     private String directory;
-    private boolean isFirstPlayer;
     private String runDirectory;
 
     private Process process;
     private PrintWriter writer;
     private BufferedReader reader;
-
 
     public Player(HashMap playerMap, String runDirectory) {
         this.name = (String) playerMap.get("name");
@@ -64,13 +59,12 @@ public class Player {
         return Integer.parseInt(line);
     }
 
-    public void endGame() throws IOException, InterruptedException {
+    public void endGame() throws IOException {
         writer.close();
         process.destroy();
     }
 
     private void initializeProcess() throws IOException {
-        List<String> res = Collections.synchronizedList(new ArrayList<String>());
         ProcessBuilder pb = new ProcessBuilder(this.command.split(" "));
         pb.directory(new File(getPlayerDirectory()));
         IOUtils.copy(Player.class.getResourceAsStream("/words.dat"), new FileOutputStream(getPlayerDirectory() + "/words.dat"));

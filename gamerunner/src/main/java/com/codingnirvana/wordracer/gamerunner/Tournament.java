@@ -31,6 +31,7 @@ public class Tournament {
 
                     Game game = new Game(firstPlayer, secondPlayer, gameNumber);
                     game.play();
+                    game.calculateResult();
 
                     ConsoleVisualizer.printGameBoard(game);
 
@@ -49,7 +50,7 @@ public class Tournament {
         for (Game game : games) {
             Player firstPlayer = game.getFirstPlayer();
             Player secondPlayer = game.getSecondPlayer();
-            Game.GameResult gameResult = game.getGameResult();
+            Game.GameResult gameResult = game.getResult();
 
             Ranking firstPlayerRanking = rankingMap.get(firstPlayer);
             if (firstPlayerRanking == null) {

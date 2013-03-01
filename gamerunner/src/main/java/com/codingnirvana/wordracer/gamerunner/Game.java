@@ -13,7 +13,9 @@ public class Game {
 
     private char[][] firstPlayerBoard;
     private char[][] secondPlayerBoard;
-    private GameResult gameResult;
+    private GameResult result;
+    private GameStatus status = GameStatus.VALID;
+    private String statusMessage;
 
     public Game(Player firstPlayer, Player secondPlayer, int gameNumber) {
         this.firstPlayer = firstPlayer;
@@ -47,19 +49,18 @@ public class Game {
 
         firstPlayer.endGame();
         secondPlayer.endGame();
-        calculateGameResult();
     }
 
-    private void calculateGameResult() {
+    public void calculateResult() {
         int firstPlayerScore = totalScore(firstPlayerBoard);
         int secondPlayerScore = totalScore(secondPlayerBoard);
 
         if (firstPlayerScore == secondPlayerScore) {
-            this.gameResult = GameResult.DRAW;
+            this.result = GameResult.DRAW;
         } else if (firstPlayerScore > secondPlayerScore) {
-            this.gameResult = GameResult.FIRST_PLAYER_WINNER;
+            this.result = GameResult.FIRST_PLAYER_WINNER;
         } else {
-            this.gameResult = GameResult.SECOND_PLAYER_WINNER;
+            this.result = GameResult.SECOND_PLAYER_WINNER;
         }
     }
 
@@ -72,8 +73,8 @@ public class Game {
         return secondPlayer;
     }
 
-    public GameResult getGameResult() {
-        return gameResult;
+    public GameResult getResult() {
+        return result;
     }
 
     public int getGameNumber() {
@@ -82,6 +83,11 @@ public class Game {
 
     public String getGameResultAsString() {
         return String.format("%s-%s", totalScore(firstPlayerBoard), totalScore(secondPlayerBoard));
+    }
+
+    private void setInvalidMessage(String message) {
+        this.status = GameStatus.INVALID;
+        this.statusMessage =  message;
     }
 
 
@@ -179,5 +185,10 @@ public class Game {
         DRAW,
         FIRST_PLAYER_WINNER,
         SECOND_PLAYER_WINNER
+    }
+
+    public static enum GameStatus {
+        VALID,
+        INVALID
     }
 }
