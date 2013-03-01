@@ -47,14 +47,21 @@ public class Player {
 
     public Result pickLetter() throws IOException, InvalidGameException {
         String line = readLineAsync();
+        char letter;
+        int position;
         try {
             String[] split = line.split(" ");
-            char letter = split[0].charAt(0);
-            int position = Integer.parseInt(split[1]);
-            return new Result(position, letter);
+            letter = split[0].charAt(0);
+            position = Integer.parseInt(split[1]);
+
         } catch (Exception e) {
-            throw new InvalidGameException(this, String.format("%s gave invalid input %s instead of '{letter} {Position}; More Details - %s'", this.getName(), line, e.getMessage()));
+            throw new InvalidGameException(this, String.format("%s gave invalid input '%s' instead of '{letter} {Position}; More Details - %s'", this.getName(), line, e.getMessage()));
         }
+
+        validateLetter(letter);
+        validatePosition(position);
+
+        return new Result(position, letter);
     }
 
     public int pickPosition(char letter) throws IOException, InvalidGameException {
@@ -62,11 +69,14 @@ public class Player {
         writer.flush();
 
         String line = readLineAsync();
+        int position;
         try {
-            return Integer.parseInt(line);
+            position = Integer.parseInt(line);
         } catch (Exception e) {
             throw new InvalidGameException(this, String.format("%s gave invalid input %s instead of '{Position}; More Details - %s'", this.getName(), line, e.getMessage()));
         }
+        validatePosition(position);
+        return position;
     }
 
     public void endGame() throws IOException {
@@ -119,6 +129,17 @@ public class Player {
         return line[0];
     }
 
+    private void validateLetter(char letter) throws InvalidGameException {
+        if (!(letter >= 'A' && letter <= 'Z')) {
+            throw new InvalidGameException(this, String.format("%s gave invalid letter '%s' instead of a valid letter between 'A' and 'Z'", this.getName(), letter));
+        }
+    }
+
+    private void validatePosition(int position) throws InvalidGameException {
+        if (!(position >= 0 && position < 49)) {
+            throw new InvalidGameException(this, String.format("%s gave invalid position '%s' instead of a valid position between 0 and 48", this.getName(), position));
+        }
+    }
 
     public class InvalidGameException extends Exception {
         private Player playerDefaulted;

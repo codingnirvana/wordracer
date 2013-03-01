@@ -60,6 +60,7 @@ public class Game {
         secondPlayer.endGame();
     }
 
+
     public void calculateResult() {
 
         if (this.status != GameStatus.VALID) {
