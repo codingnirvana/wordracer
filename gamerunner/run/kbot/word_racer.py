@@ -113,27 +113,30 @@ def fill(candidates, char=None):
             if index == -1 or placeholder_word[index] != EMPTY: continue
             if row_or_col == 'R': x = index
             else: y = index
+
+            if board[x][y] != EMPTY: continue
             
             placeholder[index] = char
             update_board(x, y, row_or_col, placeholder)                
             return (x,y), char
         else:            
             for i in xrange(len(word)):
-                if placeholder[i] == EMPTY:                                             
-                    placeholder[i] = word[i]
-                    if row_or_col == 'R': x = i
-                    else: y = i
+                if row_or_col == 'R': x = i
+                else: y = i
+
+                if placeholder[i] == EMPTY and board[x][y] == EMPTY:                                             
+                    placeholder[i] = word[i]                    
                     update_board(x, y, row_or_col, placeholder)
-                    return (x,y), word[i] 
+                    return (x,y), word[i]     
 
     # fill has not taken place            
     if len(candidates) == 0:
         # randomly pick an empty position
         xys = [(i,j) for i in xrange(SIZE) for j in xrange(SIZE)]          
         for x,y in xys:    
-            if board[y][x] == EMPTY:
+            if board[x][y] == EMPTY:
                 to_fill = char if char is not None else 'X'
-                board[y][x] = to_fill
+                board[x][y] = to_fill
                 return (x, y), to_fill
 
     elif char is not None:
@@ -142,7 +145,7 @@ def fill(candidates, char=None):
         row, col = row_col_from_xy(x, y)
         placeholder = row if row_or_col == 'R' else col        
         for i in xrange(len(placeholder)):
-            if placeholder[i] == EMPTY:
+            if placeholder[i] == EMPTY and board[x][y] == EMPTY:
                 placeholder[i] = char
                 update_board(x, y, row_or_col, placeholder)
                 return (x,y), char
