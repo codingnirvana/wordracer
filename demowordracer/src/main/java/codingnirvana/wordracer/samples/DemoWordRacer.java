@@ -1,9 +1,12 @@
-package codingnirvana.wordracer;
+package codingnirvana.wordracer.samples;
 
 // This is a demo implementation. It randomly generates
 // letters and also places them randomly on the board
 // On an average,it scores 30 points. Every program that works
 // should be able to beat this one.
+
+import codingnirvana.wordracer.Result;
+import codingnirvana.wordracer.WordRacer;
 
 import java.util.Random;
 
