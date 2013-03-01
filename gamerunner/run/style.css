@@ -60,6 +60,7 @@ table.submissions { border-collapse: collapse; }
 .failedsub td { background-color: #ffeeee; }
 .activesub td { background-color: #eeffee; }
 
+table.empty { display:none; }
 table.moves { border-collapse: collapse; }
 .moves td, .moves th { border: 1px solid gray; }
 
@@ -103,6 +104,7 @@ table.gameboardnrs { border: none; border-collapse: collapse; }
 .gameboard td.tlr { background-color: #f0fff0; border-top: 1px solid #f0fff0; border-left: 1px solid #f0fff0; border-right: 1px solid #f0fff0; }
 .gameboard td.blr { background-color: #f0fff0; border-bottom: 1px solid #f0fff0; border-left: 1px solid #f0fff0; border-right: 1px solid #f0fff0; }
 .gameboard td.tblr { background-color: #f0fff0; border: 1px solid #f0fff0; }
-.gameboard td.empty { color: #e0e0e0; font-weight: normal; }
+.gameboard td.empty { color: #f4f4f4; font-weight: normal; }
 .gameboard td i { font-style: normal; color: #c00000; }
 .gameboard td.empty i { font-style: normal; color: #ffd0d0; }
+

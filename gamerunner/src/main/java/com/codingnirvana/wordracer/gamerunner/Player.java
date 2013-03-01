@@ -35,7 +35,7 @@ public class Player {
        return String.format("%s/%s/", runDirectory, this.directory);
     }
 
-    public void initGameBoard(char letter, boolean isFirstPlayer) throws IOException {
+    public void initGameBoard(char letter, boolean isFirstPlayer) throws InvalidGameException {
         this.timeLeft = TOTAL_ALLOWED_TIME;
         initializeProcess();
 
@@ -45,7 +45,7 @@ public class Player {
         writer.flush();
     }
 
-    public Result pickLetter() throws IOException, InvalidGameException {
+    public Result pickLetter() throws InvalidGameException {
         String line = readLineAsync();
         char letter;
         int position;
@@ -64,7 +64,7 @@ public class Player {
         return new Result(position, letter);
     }
 
-    public int pickPosition(char letter) throws IOException, InvalidGameException {
+    public int pickPosition(char letter) throws InvalidGameException {
         writer.println(letter);
         writer.flush();
 
@@ -80,24 +80,32 @@ public class Player {
     }
 
     public void endGame() throws IOException {
-        writer.close();
-        process.destroy();
+        if (writer != null) {
+            writer.close();
+        }
+        if (process != null) {
+            process.destroy();
+        }
     }
 
     public long getTimeTakenInMs() {
         return TOTAL_ALLOWED_TIME - timeLeft;
     }
 
-    private void initializeProcess() throws IOException {
+    private void initializeProcess() throws InvalidGameException {
         ProcessBuilder pb = new ProcessBuilder(this.command.split(" "));
         pb.directory(new File(getPlayerDirectory()));
-        IOUtils.copy(Player.class.getResourceAsStream("/words.dat"), new FileOutputStream(getPlayerDirectory() + "/words.dat"));
-        process = pb.start();
+        try {
+            IOUtils.copy(Player.class.getResourceAsStream("/words.dat"), new FileOutputStream(getPlayerDirectory() + "/words.dat"));
+            process = pb.start();
+        } catch (IOException e) {
+            throw new InvalidGameException(this, String.format("Error running the bot of player %s. More Details - %s", this.getName(), e.getMessage()));
+        }
         writer = new PrintWriter(process.getOutputStream());
         reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
     }
 
-    private String readLineAsync() throws IOException, InvalidGameException {
+    private String readLineAsync() throws InvalidGameException {
         final String[] line = {""};
         long start = System.currentTimeMillis();
 

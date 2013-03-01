@@ -17,6 +17,9 @@ public class Game {
     private GameStatus status = GameStatus.VALID;
     private String statusMessage;
 
+    private List<Result> firstPlayerMoves = new ArrayList<Result>();
+    private List<Result> secondPlayerMoves = new ArrayList<Result>();
+
     public Game(Player firstPlayer, Player secondPlayer, int gameNumber) {
         this.firstPlayer = firstPlayer;
         this.secondPlayer = secondPlayer;
@@ -38,15 +41,19 @@ public class Game {
 
             for (int turn = 0; turn < 24; turn++) {
                 Result result = firstPlayer.pickLetter();
+                firstPlayerMoves.add(result);
                 firstPlayerBoard[result.position / 7][result.position % 7] = result.letter;
 
                 int position = secondPlayer.pickPosition(result.letter);
+                secondPlayerMoves.add(new Result(position, '-'));
                 secondPlayerBoard[position / 7][position % 7] = result.letter;
 
                 result = secondPlayer.pickLetter();
+                secondPlayerMoves.add(result);
                 secondPlayerBoard[result.position / 7][result.position % 7] = result.letter;
 
                 position = firstPlayer.pickPosition(result.letter);
+                firstPlayerMoves.add(new Result(position, '-'));
                 firstPlayerBoard[position / 7][position % 7] = result.letter;
             }
         } catch (Player.InvalidGameException e) {
@@ -201,6 +208,14 @@ public class Game {
 
     public GameStatus getStatus() {
         return status;
+    }
+
+    public List<Result> getFirstPlayerMoves() {
+        return firstPlayerMoves;
+    }
+
+    public List<Result> getSecondPlayerMoves() {
+        return secondPlayerMoves;
     }
 
     public static enum GameResult {
