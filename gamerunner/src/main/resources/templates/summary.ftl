@@ -41,13 +41,25 @@
                                 <th align="left" width="150" class="kimborder">Result</th>
                             </tr>
                             <#list games as game>
-                            <tr>
-                                <td align="right" class="kimborder"><a href='game${game.gameNumber}.html'>${game.gameNumber}</a> &nbsp;</td>
-                                <td class="kimborder">
-                                    <div>${game.firstPlayer.name}</div>
+                                <tr>
+                                    <td align="right" class="kimborder"><a href='game${game.gameNumber}.html'>${game.gameNumber}</a> &nbsp;</td>
+                                    <td class="kimborder">
+                                    <div>
+                                    <#if game.result == "FIRST_PLAYER_WINNER" >
+                                        <b>${game.firstPlayer.name}</b>
+                                    <#else>
+                                        ${game.firstPlayer.name}
+                                    </#if>
+                                    </div>
                                 </td>
                                 <td class="kimborder">
-                                    <div>${game.secondPlayer.name}</div>
+                                    <div>
+                                    <#if game.result == "SECOND_PLAYER_WINNER" >
+                                          <b>    ${game.secondPlayer.name}  </b>
+                                     <#else>
+                                             ${game.secondPlayer.name}
+                                     </#if>
+                                    </div>
                                 </td>
                                 <td class="kimborder">${game.gameResultAsString}</td>
                             </tr>

@@ -112,11 +112,9 @@ public class Game {
             return this.statusMessage;
         }
 
-        return String.format("%s(%s)-%s(%s)",
+        return String.format("%s-%s",
                 totalScore(firstPlayerBoard),
-                firstPlayer.getTimeTakenInMs(),
-                totalScore(secondPlayerBoard),
-                secondPlayer.getTimeTakenInMs()
+                totalScore(secondPlayerBoard)
         );
     }
 
