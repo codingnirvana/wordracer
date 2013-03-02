@@ -99,6 +99,7 @@ int main(){
         if(my_turn){
             result = pick_letter();
             printf("%c %d\n", result.letter, result.position);
+	    fflush(stdout);
         }else{
             // XXX: 
             // already hitting the ugly parts of stdin buffer handling 
@@ -106,6 +107,7 @@ int main(){
                 scanf("%c", &opponent_letter);
             }while(opponent_letter == '\n' || opponent_letter == '\0');
             printf("%d\n", place_letter(opponent_letter));
+	    fflush(stdout);
         }
         // toggle move
         my_turn = my_turn ^ 1;
