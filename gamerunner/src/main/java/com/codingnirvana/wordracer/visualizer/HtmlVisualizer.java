@@ -23,7 +23,7 @@ public class HtmlVisualizer {
 
     public HtmlVisualizer() throws IOException, URISyntaxException {
         config = new Configuration();
-        config.setClassForTemplateLoading(HtmlVisualizer.class,"/templates");
+        config.setClassForTemplateLoading(HtmlVisualizer.class, "/templates");
         config.setObjectWrapper(new DefaultObjectWrapper());
     }
 
@@ -49,15 +49,19 @@ public class HtmlVisualizer {
     private void buildGamesHtml(List<Game> games, String resultsDirectoryPath) throws IOException, TemplateException {
         Template gameTemplate = config.getTemplate("game.ftl");
         for (Game game : games) {
-            Map<String, Object> root = new HashMap<String, Object>();
-            root.put("game", game);
-            root.put("firstPlayerScore", Game.calculateScore(game.getFirstPlayerBoard()));
-            root.put("firstPlayerTotalScore", game.totalScore(game.getFirstPlayerBoard()));
-            root.put("secondPlayerScore", Game.calculateScore(game.getSecondPlayerBoard()));
-            root.put("secondPlayerTotalScore", game.totalScore(game.getSecondPlayerBoard()));
-            Writer out = new PrintWriter(String.format("%s/game%s.html", resultsDirectoryPath, game.getGameNumber()));
-            gameTemplate.process(root, out);
-            out.flush();
+            try {
+                Map<String, Object> root = new HashMap<String, Object>();
+                root.put("game", game);
+                root.put("firstPlayerScore", Game.calculateScore(game.getFirstPlayerBoard()));
+                root.put("firstPlayerTotalScore", game.totalScore(game.getFirstPlayerBoard()));
+                root.put("secondPlayerScore", Game.calculateScore(game.getSecondPlayerBoard()));
+                root.put("secondPlayerTotalScore", game.totalScore(game.getSecondPlayerBoard()));
+                Writer out = new PrintWriter(String.format("%s/game%s.html", resultsDirectoryPath, game.getGameNumber()));
+                gameTemplate.process(root, out);
+                out.flush();
+            } catch (Exception e) {
+                System.out.println("FATAL: Could not generate game details for game " + game);
+            }
         }
     }
 
