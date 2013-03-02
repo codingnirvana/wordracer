@@ -32,7 +32,18 @@ public class HtmlVisualizer {
         createOrPurgeResultsDirectory(new File(resultsDirectoryPath));
 
         buildSummaryHtml(tournament, resultsDirectoryPath);
+        buildGameListHtml(tournament, resultsDirectoryPath);
         buildGamesHtml(tournament.getGames(), resultsDirectoryPath);
+    }
+
+    private void buildGameListHtml(Tournament tournament, String resultsDirectory) throws IOException, TemplateException {
+        Template summaryTemplate = config.getTemplate("game-list.ftl");
+        Map<String, Object> root = new HashMap<String, Object>();
+        root.put("games", tournament.getGames());
+
+        Writer out = new PrintWriter(String.format("%s/game-list.html", resultsDirectory));
+        summaryTemplate.process(root, out);
+        out.flush();
     }
 
     private void buildGamesHtml(List<Game> games, String resultsDirectoryPath) throws IOException, TemplateException {

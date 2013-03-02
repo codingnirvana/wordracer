@@ -24,12 +24,15 @@ function gInit() {
     if (gposa) gcurmove = gposa.length;
     if (gposb && gposb.length > gcurmove) gcurmove = gposb.length;
 
+    var autoMode = getParameterByName("auto");
 
-
-    setTimeout(function () {
-        autoMove(500)
-    }, 500);
-
+    if (autoMode) {
+        setTimeout(function () {
+            autoMove(500)
+        }, 500);
+    } else {
+        gShowScores();
+    }
 }
 
 function autoMove(time) {
@@ -53,6 +56,18 @@ function gShowScores() {
     })
     var gameReportTbl = document.getElementById('gameReport');
     gameReportTbl.className = '';
+}
+
+function getParameterByName(name)
+{
+    name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+    var regexS = "[\\?&]" + name + "=([^&#]*)";
+    var regex = new RegExp(regexS);
+    var results = regex.exec(window.location.search);
+    if(results == null)
+        return "";
+    else
+        return decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
 function gShowWord(board, dir, pos, len) {
