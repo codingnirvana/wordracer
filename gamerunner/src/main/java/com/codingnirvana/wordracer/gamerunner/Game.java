@@ -103,6 +103,10 @@ public class Game {
         return gameNumber;
     }
 
+    public int getTotalValidMoves() {
+        return Math.min(firstPlayerMoves.size(), secondPlayerMoves.size());
+    }
+
     public String getGameResultAsString() {
         if (this.status == GameStatus.INVALID) {
             return this.statusMessage;

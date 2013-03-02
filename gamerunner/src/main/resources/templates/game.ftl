@@ -58,11 +58,11 @@
                         <form>
                             <select name='movesel' id='movesel' size="15" style='font-family: monospace'
                                     onchange='gSetMove(this.selectedIndex+1)'>
-                                <#list game.firstPlayerMoves as move>
-                                    <option value="${move_index}">
-                                        &nbsp;${move_index + 1}.
-                                        &nbsp;&nbsp;${move.letter}&nbsp;&nbsp;${move.position}&nbsp;
-                                        &nbsp;&nbsp;${game.secondPlayerMoves[move_index].letter}&nbsp;&nbsp;${game.secondPlayerMoves[move_index].position}
+                                <#list 0..(game.totalValidMoves - 1) as i>
+                                    <option value="${i}">
+                                        &nbsp;${i + 1}.
+                                        &nbsp;&nbsp;${game.firstPlayerMoves[i].letter}&nbsp;&nbsp;${game.firstPlayerMoves[i].position}&nbsp;
+                                        &nbsp;&nbsp;${game.secondPlayerMoves[i].letter}&nbsp;&nbsp;${game.secondPlayerMoves[i].position}
                                     </option>
                                 </#list>
                             </select></form>

@@ -12,10 +12,7 @@ public class ConsoleVisualizer {
         System.out.println(String.format("Game Status - %s", game.getStatus() == Game.GameStatus.VALID ? "VALID" : "INVALID" ));
         System.out.println(game.getGameResultAsString());
 
-        for (int i = 0; i < 48; i++) {
-            if (i >= game.getFirstPlayerMoves().size()) {
-                return;
-            }
+        for (int i = 0; i < game.getTotalValidMoves(); i++) {
             Result resultA = game.getFirstPlayerMoves().get(i);
             Result resultB = game.getSecondPlayerMoves().get(i);
             System.out.println(String.format("%s %s %s %s",resultA.letter, resultA.position, resultB.letter, resultB.position));
