@@ -1,10 +1,8 @@
 .idea
-demowordracer/target
-gamerunner/target
+target/
+*iml
+*ipr
+*iws
 gamerunner/run/results/
-demowordracer/*.iml
-gamerunner/*.iml
-gamerunner/*.ipr
-gamerunner/*.iws
 gamerunner/run/**/words.dat
 gamerunner/conf/players.yml

@@ -37,6 +37,4 @@ public class Runner {
 
         new HtmlVisualizer().printRankings(tournament, runDirectory);
     }
-
-
 }
