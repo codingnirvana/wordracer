@@ -4,6 +4,7 @@ import com.codingnirvana.wordracer.{Result, WordRacer}
 
 import scala.annotation.tailrec
 import scala.util.Random
+import scala.collection.Searching._
 
 case class Board(cells: IndexedSeq[IndexedSeq[Char]]) {
 
@@ -19,11 +20,31 @@ case class Board(cells: IndexedSeq[IndexedSeq[Char]]) {
 
   override def toString = cells.map(_.mkString(" ")).mkString("\n")
 
-  def calculateScore(words: Array[String]) = {
+  val score = Seq(0, 0, 1, 2, 3, 5, 8, 13)
 
-    val score = Seq(0, 0, 1, 2, 3, 5, 8, 13)
+  def calculateScore(words: IndexedSeq[String]) = {
 
+    val rowCounts = for {
+      cell <- cells
+      len <- 7 to 2
+    } yield calc(words, cell.toString, 0, len)
 
+    val colCounts = for {
+      cell <- cells.transpose
+      len <- 7 to 2
+    } yield calc(words, cell.toString, 0, len) ;,;,;,
+  }
+
+  def calc(words: IndexedSeq[String], rowOrCol: String, start: Int, len: Int) : Int = {
+    if (start >= rowOrCol.length) {
+      0
+    } else {
+      val wordToFind = rowOrCol.slice(start, start + len).mkString("")
+      words.search(wordToFind) match {
+        case Found(x) => score(len) + calc(words, rowOrCol, start + len, len)
+        case _        => calc(words, rowOrCol, start + 1, len)
+      }
+    }
   }
 
 }
