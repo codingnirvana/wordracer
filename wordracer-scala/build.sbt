@@ -5,7 +5,7 @@ lazy val wordRacer = (project in file("."))
     scalaVersion := "2.11.11",
     libraryDependencies ++= Seq(scalatest, junit),
     mainClass in assembly := Some("com.codingnirvana.wordracer.Runner"),
-    assemblyJarName in assembly := "wordracer-my-name.jar" // Replace this with a jar name of your choice
+    assemblyJarName in assembly := "wordracer-scala-my-name.jar" // Replace this with a jar name of your choice
   )
 
 val scalatest = "org.scalatest" %% "scalatest" % "3.0.3" % Test

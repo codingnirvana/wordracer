@@ -28,14 +28,14 @@ object LocalTester {
       firstBoard = firstBoard.update(result1)
 
       val pos2 = player2.pickPosition(result1.letter)
-      val result2 = new Result(pos2, result1.letter)
+      val result2 = Result(pos2, result1.letter)
       secondBoard = secondBoard.update(result2)
 
       val result3 = player2.pickLetter
       secondBoard = secondBoard.update(result3)
 
       val pos4 = player1.pickPosition(result3.letter)
-      val result4 = new Result(pos4, result3.letter)
+      val result4 = Result(pos4, result3.letter)
       firstBoard = firstBoard.update(result4)
     }
 
@@ -44,10 +44,10 @@ object LocalTester {
     val score2 = secondBoard.calculateScore()
 
     println("Player 1 Board")
-    println(firstBoard.toString(score1))
+    println(firstBoard.displayBoardWithScore())
 
     println("Player 2 Board")
-    println(secondBoard.toString(score2))
+    println(secondBoard.displayBoardWithScore())
 
     System.exit(1)
   }
