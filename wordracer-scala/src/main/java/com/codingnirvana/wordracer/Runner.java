@@ -3,12 +3,18 @@ package com.codingnirvana.wordracer;
 import com.codingnirvana.wordracer.impl.DemoWordRacer;
 import com.codingnirvana.wordracer.samples.*;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Runner {
+
+
     public static void main(String[] args) throws IOException {
 
-        WordRacer dRacer = new DemoWordRacer();
+        List<String> words = readWordsList();
+
+        WordRacer dRacer = new JDemoWordRacer();
 
         if (args.length == 1) {
             String type = args[0].trim();
@@ -45,4 +51,15 @@ public class Runner {
             myTurn = !myTurn;
         }
     }
+
+    private static List<String> readWordsList() {
+        List<String> words = new ArrayList<String>();
+        Scanner scanner = new Scanner(Runner.class.getResourceAsStream("/words.dat"));
+        while (scanner.hasNext()) {
+            String line = scanner.nextLine();
+            words.add(line);
+        }
+        return words;
+    }
+
 }

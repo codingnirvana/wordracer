@@ -9,11 +9,14 @@ object LocalTester {
   def main(args: Array[String]) = {
     val startingLetter = ('A' + Random.nextInt(26)).toChar
 
-    var firstBoard = Board(IndexedSeq.fill(7,7)('*'))
-    var secondBoard = Board(IndexedSeq.fill(7,7)('*'))
+    val stream = getClass.getResourceAsStream("/words.dat")
+    val words = scala.io.Source.fromInputStream(stream).getLines.toIndexedSeq.sorted
 
-    val player1 = new DemoWordRacer
-    val player2 = new DemoWordRacer
+    var firstBoard = Board(IndexedSeq.fill(7,7)('*'), words)
+    var secondBoard = Board(IndexedSeq.fill(7,7)('*'), words)
+
+    val player1 = new DemoWordRacer(words)
+    val player2 = new DemoWordRacer(words)
 
     player1.initGameBoard(startingLetter)
     player2.initGameBoard(startingLetter)
@@ -36,11 +39,9 @@ object LocalTester {
       firstBoard = firstBoard.update(result4)
     }
 
-    val stream = getClass.getResourceAsStream("/words.dat")
-    val words = scala.io.Source.fromInputStream(stream).getLines.toIndexedSeq.sorted
 
-    val score1 = firstBoard.calculateScore(words)
-    val score2 = secondBoard.calculateScore(words)
+    val score1 = firstBoard.calculateScore()
+    val score2 = secondBoard.calculateScore()
 
     println("Player 1 Board")
     println(firstBoard.toString(score1))

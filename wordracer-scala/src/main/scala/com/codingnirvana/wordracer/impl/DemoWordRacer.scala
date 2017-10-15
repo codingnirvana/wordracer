@@ -3,7 +3,6 @@ package com.codingnirvana.wordracer.impl
 
 import com.codingnirvana.wordracer.{Result, WordRacer}
 
-import scala.annotation.tailrec
 import scala.collection.Searching._
 import scala.util.Random
 
@@ -11,14 +10,20 @@ case class Score(rowScore: IndexedSeq[Int], colScore: IndexedSeq[Int]) {
   val totalScore = rowScore.sum + colScore.sum
 }
 
-case class Board(cells: IndexedSeq[IndexedSeq[Char]]) {
+case class ScoreState(scoreSoFar: Int, taken: Seq[Boolean]) {
+  def +(other: ScoreState) = other.copy(scoreSoFar = scoreSoFar + other.scoreSoFar)
+}
+
+
+
+case class Board(cells: IndexedSeq[IndexedSeq[Char]], words: IndexedSeq[String]) {
 
   def update(result: Result) : Board = {
     this.update(result.position / 7, result.position % 7, result.letter)
   }
 
   def update(r: Int, c: Int, letter: Char) : Board = {
-    Board(cells.updated(r, cells(r).updated(c, letter)))
+    Board(cells.updated(r, cells(r).updated(c, letter)), words)
   }
 
   def apply(r: Int)(c: Int) = cells(r)(c)
@@ -35,38 +40,40 @@ case class Board(cells: IndexedSeq[IndexedSeq[Char]]) {
 
     rows + "\n" + lastRow
   }
-  val score = Seq(0, 0, 1, 2, 3, 5, 8, 13)
+  val scoreMap = Seq(0, 0, 1, 2, 3, 5, 8, 13)
 
-  def calculateScore(words: IndexedSeq[String]) = {
+  def calculateScore() = Score(calcScore(cells), calcScore(cells.transpose))
 
-    val rowScore = cells.map { cell =>
-      (2 to 7).reverse.fold(0) { case (soFar, len) => soFar + calc(words, cell.mkString, 0, len) }
-    }
-
-    val colScore = cells.transpose.map { cell =>
-      (2 to 7).reverse.fold(0) { case (soFar, len) => soFar + calc(words, cell.mkString, 0, len) }
-    }
-
-    Score(rowScore, colScore)
+  def calcScore(_cells: IndexedSeq[IndexedSeq[Char]]) = {
+    cells.map { cell =>
+      val row = cell.mkString
+      val taken: Seq[Boolean] = Vector.fill(7)(true)
+      val initialScoreState = ScoreState(0, taken)
+      (2 to 7).reverse.foldLeft(initialScoreState) {
+        case (scoreState, len) => scoreState.+(calc(cell.mkString, 0, len, scoreState.taken))
+      }
+    }.map(_.scoreSoFar)
   }
 
-  def calc(words: IndexedSeq[String], rowOrCol: String, start: Int, len: Int) : Int = {
+  def calc(rowOrCol: String, start: Int, len: Int, taken: Seq[Boolean]) : ScoreState = {
     if (start + len > rowOrCol.length) {
-      0
+      ScoreState(0, taken)
     } else {
       val wordToFind = rowOrCol.slice(start, start + len).mkString("")
       words.search(wordToFind) match {
-        case Found(x) => score(len) + calc(words, rowOrCol, start + len, len)
-        case _        => calc(words, rowOrCol, start + 1, len)
+        case Found(x) => {
+          ScoreState(scoreMap(len), taken) + calc(rowOrCol, start + len, len, taken)
+        }
+        case _        => calc(rowOrCol, start + 1, len, taken)
       }
     }
   }
 
 }
 
-class DemoWordRacer extends WordRacer {
+class DemoWordRacer(words: IndexedSeq[String]) extends WordRacer {
 
-  var board = Board(IndexedSeq.fill(7,7)('*'))
+  var board = Board(IndexedSeq.fill(7,7)('*'), words)
 
   override def initGameBoard(letter: Char): Unit = {
     board = board.update(3, 3, letter)
@@ -78,23 +85,17 @@ class DemoWordRacer extends WordRacer {
   }
 
   override def pickPosition(letter: Char): Int = {
-    pickPosRec(letter)
-  }
-
-  @tailrec
-  private def pickPosRec(letter : Char) : Int = {
     val pos = Random.nextInt(49)
     val row = pos / 7
     val col = pos % 7
 
     if ((row, col) == (3, 3)) {
-      pickPosRec(letter)
+      pickPosition(letter)
     } else if (board(row)(col) != '*') {
-      pickPosRec(letter)
+      pickPosition(letter)
     } else {
       board = board.update(row, col,letter)
       pos
     }
   }
-
 }
