@@ -13,13 +13,8 @@ import java.util.List;
 public class Runner {
     public static void main(String[] args) throws Exception {
 
-        if (args.length != 2) {
-            System.out.println("Please specify the path to the players.yml configuration and the run directory");
-            return;
-        }
-
-        String configPath = args[0];
-        String runDirectory = args[1];
+        String configPath = "./conf/players.yml";
+        String runDirectory = "./run";
 
         Yaml yaml = new Yaml();
         HashMap playerMap = (HashMap) yaml.load(new FileReader(configPath));
