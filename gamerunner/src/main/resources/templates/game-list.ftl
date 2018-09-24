@@ -19,7 +19,7 @@
                             </tr>
                         <#list games as game>
                             <tr>
-                                <td align="right" class="kimborder"><a href='game${game.gameNumber}.html?auto=true'>${game.gameNumber}</a> &nbsp;</td>
+                                <td align="right" class="kimborder"><a href='game${game.gameNumber?c}.html?auto=true'>${game.gameNumber}</a> &nbsp;</td>
                                 <td class="kimborder">
                                     <div>${game.firstPlayer.name}</div>
                                 </td>
