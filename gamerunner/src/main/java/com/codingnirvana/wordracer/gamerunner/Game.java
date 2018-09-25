@@ -29,9 +29,7 @@ public class Game {
         this.secondPlayerBoard = new char[7][7];
     }
 
-    public void play() throws IOException {
-        char startingLetter = (char) ('A' + new Random().nextInt(25));
-
+    public void play(char startingLetter) throws IOException {
         firstPlayerBoard[3][3] = secondPlayerBoard[3][3] = startingLetter;
 
         try {

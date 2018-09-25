@@ -70,6 +70,7 @@ public class HtmlVisualizer {
         Map<String, Object> root = new HashMap<String, Object>();
         root.put("rankings", tournament.getRankings());
         root.put("games", tournament.getGames());
+        root.put("headToHeads", tournament.getHeadToHeads());
 
         Writer out = new PrintWriter(String.format("%s/summary.html", resultsDirectory));
         summaryTemplate.process(root, out);

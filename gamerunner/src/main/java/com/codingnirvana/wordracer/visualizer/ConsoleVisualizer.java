@@ -29,7 +29,17 @@ public class ConsoleVisualizer {
         printBoardWithTotal(game, game.getSecondPlayerBoard());
     }
 
-    public static void printRankings(List<Tournament.Ranking> rankings) {
+    public static void printRankings(List<Tournament.HeadToHead> headToHeads, List<Tournament.Ranking> rankings) {
+        System.out.println("***********************");
+        System.out.println("Head To Head");
+        System.out.println("***********************");
+        System.out.println("First Player (Wins)| Second Player (Wins)| Drawn");
+        System.out.println("-----------------------");
+        for (Tournament.HeadToHead headToHead: headToHeads) {
+            System.out.println(String.format("%s (%s)| %s (%s)| %s", headToHead.getFirstPlayer().getName(), headToHead.getFirstPlayerWins(), headToHead.getSecondPlayer().getName(), headToHead.getSecondPlayerWins(), headToHead.getDrawn()));
+        }
+
+        System.out.println();
         int rank = 1;
         System.out.println("***********************");
         System.out.println("Final Rankings");
