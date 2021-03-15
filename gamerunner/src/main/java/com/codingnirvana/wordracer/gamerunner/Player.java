@@ -14,6 +14,8 @@ public class Player {
     private String directory;
     private String runDirectory;
     private long timeLeft;
+    // Added new Member
+    private char[][] board;
 
     private Process process;
     private PrintWriter writer;
@@ -25,6 +27,9 @@ public class Player {
         this.command = (String) playerMap.get("command");
         this.runDirectory = runDirectory;
         this.directory = (String) playerMap.get("directory");
+        this.board = new char[7][7];
+        // - denotes the position is already occupied
+        this.board[3][3] = '-'
     }
 
     public String getName() {
@@ -147,6 +152,11 @@ public class Player {
         if (!(position >= 0 && position < 49)) {
             throw new InvalidGameException(this, String.format("%s gave invalid position '%s' instead of a valid position between 0 and 48", this.getName(), position));
         }
+        else if(board[position / 7][position % 7] == '-') {
+            throw new InvalidGameException(this, String.format("%s gave invalid position '%s' which is already occupied", this.getName(), position));
+        }
+        else
+            this.board[position / 7][position % 7] = '-';
     }
 
     public class InvalidGameException extends Exception {
