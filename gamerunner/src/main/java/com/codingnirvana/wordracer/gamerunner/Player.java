@@ -152,7 +152,7 @@ public class Player {
         if (!(position >= 0 && position < 49)) {
             throw new InvalidGameException(this, String.format("%s gave invalid position '%s' instead of a valid position between 0 and 48", this.getName(), position));
         }
-        else if(board[position / 7][position % 7] == '\0') {
+        else if(board[position / 7][position % 7] == '-') {
             throw new InvalidGameException(this, String.format("%s gave invalid position '%s' which is already occupied", this.getName(), position));
         }
         else
